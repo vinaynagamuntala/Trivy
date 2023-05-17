@@ -20,10 +20,4 @@ jobs:
           sudo mv trivy /usr/local/bin/
           
       - name: Scan Docker image with Trivy
-        run: trivy repo -f json -o results.json https://github.com/sreeragpc-ceq/hireyourmentor-aws.git
-        
-      - name: Upload scan result
-        uses: actions/upload-artifact@v3
-        with:
-            name: results
-            path: results.json
+        run: trivy image alpine:3.9.2
