@@ -25,4 +25,5 @@ jobs:
       - name: Upload scan result
         uses: actions/upload-artifact@v3
         with:
-            name: results.json
+            name: results
+            path: results.json
