@@ -21,3 +21,9 @@ jobs:
           
       - name: Scan Docker image with Trivy
         run: trivy image alpine:3.9.2
+        
+      - name: Upload scan result
+        uses: actions/upload-artifact@v3
+        with:
+            name: Image_scan_report
+            path: Image_scan_report.txt
