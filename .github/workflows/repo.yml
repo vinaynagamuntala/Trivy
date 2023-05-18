@@ -18,7 +18,7 @@ jobs:
           sudo mv trivy /usr/local/bin/
           
       - name: Scan repo with Trivy
-        run: trivy repo -f json -o results.json https://github.com/sreeragpc-ceq/hireyourmentor-aws.git
+        run: trivy repo -f table -o results.json https://github.com/sreeragpc-ceq/hireyourmentor-aws.git
         
       - name: Upload scan result
         uses: actions/upload-artifact@v3
