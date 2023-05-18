@@ -1,60 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo-express
+  name: nginx-deployment
   labels:
-    app: mongo-express
+    app: nginx
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app: mongo-express
+      app: nginx
   template:
     metadata:
       labels:
-        app: mongo-express
+        app: nginx
     spec:
       containers:
-      - name: mongo-express
-        image: mongo-express
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "300m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+      - name: nginx
+        image: nginx:1.14.2
         ports:
-        - containerPort: 8081
-        livenessProbe:
-          tcpSocket:
-            port: 8081
-          initialDelaySeconds: 20
-          periodSeconds: 10
-        readinessProbe:
-          tcpSocket:
-            port: 8081
-          initialDelaySeconds: 20
-          periodSeconds: 10
-        env:
-        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-secret
-              key: mongo-root-username
-        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mongodb-secret
-              key: mongo-root-password
-        - name: ME_CONFIG_MONGODB_SERVER
-          valueFrom:
-            configMapKeyRef:
-              name: mongodb-configmap
-              key: database_url
-      volumes:
-      - name: my-vol
-        persistentVolumeClaim:
-             claimName: my-pvc
----
-
+        - containerPort: 80
