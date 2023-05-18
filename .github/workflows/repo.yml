@@ -1,0 +1,27 @@
+name: Scan repo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Trivy
+        run: |
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.20.0/trivy_0.20.0_Linux-64bit.tar.gz
+          tar zxvf trivy_0.20.0_Linux-64bit.tar.gz
+          sudo mv trivy /usr/local/bin/
+          
+      - name: Scan repo with Trivy
+        run: trivy repo -f json -o results.json https://github.com/sreeragpc-ceq/hireyourmentor-aws.git
+        
+      - name: Upload scan result
+        uses: actions/upload-artifact@v3
+        with:
+            name: results
+            path: results.json
